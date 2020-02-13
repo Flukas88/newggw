@@ -1,0 +1,7 @@
+client/client
+server/server
+.idea/codeStyles/
+.idea/modules.xml
+.idea/newggw.iml
+.idea/vcs.xml
+.idea/*
