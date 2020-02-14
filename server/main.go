@@ -9,6 +9,7 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 
 	"github.com/Flukas88/newggw/proto/ggwpb"
@@ -42,6 +43,8 @@ func (*server) Now(ctx context.Context, request *ggwpb.WheaterRequest) (*ggwpb.W
 var config ServerConfig
 var version = "dev"
 
+var wg sync.WaitGroup
+
 func main() {
 	// Reading config
 	configFile, err := ioutil.ReadFile("server.json")
@@ -67,7 +70,7 @@ func main() {
 	if srvErr != nil {
 		log.Fatal(srvErr)
 	}
-
+	wg.Add(1)
 	signalChannel := make(chan os.Signal, 2)
 	signal.Notify(signalChannel, os.Interrupt, syscall.SIGTERM)
 	go func() {
@@ -75,11 +78,11 @@ func main() {
 		switch sig {
 		case os.Interrupt:
 			s.Stop()
-			log.Println("Closing...")
+			log.Println("Closing the server...")
 			os.Exit(0)
 		case syscall.SIGTERM:
 			s.Stop()
-			log.Println("Closing...")
+			log.Println("Closing the server...")
 			os.Exit(0)
 		}
 	}()
