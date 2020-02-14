@@ -7,6 +7,9 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/Flukas88/newggw/proto/ggwpb"
 	"google.golang.org/grpc"
@@ -64,4 +67,20 @@ func main() {
 	if srvErr != nil {
 		log.Fatal(srvErr)
 	}
+
+	signalChannel := make(chan os.Signal, 2)
+	signal.Notify(signalChannel, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		sig := <-signalChannel
+		switch sig {
+		case os.Interrupt:
+			s.Stop()
+			log.Println("Closing...")
+			os.Exit(0)
+		case syscall.SIGTERM:
+			s.Stop()
+			log.Println("Closing...")
+			os.Exit(0)
+		}
+	}()
 }
