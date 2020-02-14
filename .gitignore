@@ -5,3 +5,4 @@ server/server
 .idea/newggw.iml
 .idea/vcs.xml
 .idea/*
+.env
