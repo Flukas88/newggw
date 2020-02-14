@@ -9,7 +9,6 @@ import (
 	"net"
 	"os"
 	"os/signal"
-	"sync"
 	"syscall"
 
 	"github.com/Flukas88/newggw/proto/ggwpb"
@@ -17,6 +16,20 @@ import (
 )
 
 type server struct {
+}
+
+// SetupCloseHandler creates a 'listener' on a new goroutine which will notify the
+// program if it receives an interrupt from the OS. We then handle this by calling
+// our clean up procedure and exiting the program.
+func SetupCloseHandler(s *grpc.Server) {
+	c := make(chan os.Signal, 2)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
+		fmt.Println("\nClosing...")
+		s.GracefulStop()
+		os.Exit(0)
+	}()
 }
 
 func (*server) Now(ctx context.Context, request *ggwpb.WheaterRequest) (*ggwpb.WheaterResponse, error) {
@@ -43,9 +56,8 @@ func (*server) Now(ctx context.Context, request *ggwpb.WheaterRequest) (*ggwpb.W
 var config ServerConfig
 var version = "dev"
 
-var wg sync.WaitGroup
-
 func main() {
+
 	// Reading config
 	configFile, err := ioutil.ReadFile("server.json")
 	if err != nil {
@@ -64,26 +76,14 @@ func main() {
 	fmt.Printf("Server (version %s) is listening on %v ...\n", version, address)
 
 	s := grpc.NewServer()
+
+	SetupCloseHandler(s)
+
 	ggwpb.RegisterGgwServer(s, &server{})
 
 	srvErr := s.Serve(lis)
 	if srvErr != nil {
 		log.Fatal(srvErr)
 	}
-	wg.Add(1)
-	signalChannel := make(chan os.Signal, 2)
-	signal.Notify(signalChannel, os.Interrupt, syscall.SIGTERM)
-	go func() {
-		sig := <-signalChannel
-		switch sig {
-		case os.Interrupt:
-			s.Stop()
-			log.Println("Closing the server...")
-			os.Exit(0)
-		case syscall.SIGTERM:
-			s.Stop()
-			log.Println("Closing the server...")
-			os.Exit(0)
-		}
-	}()
+
 }
