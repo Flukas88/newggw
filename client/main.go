@@ -17,6 +17,12 @@ var version = "dev"
 
 func main() {
 
+	argsWithoutProg := os.Args[1:]
+	if len(argsWithoutProg) < 2 {
+		log.Printf("City or degrees not provided.")
+		os.Exit(2)
+	}
+
 	// Reading config
 	configFile, err := ioutil.ReadFile("client.json")
 	if err != nil {
@@ -29,7 +35,6 @@ func main() {
 
 	address := fmt.Sprintf("%s:%d", config.Server, config.Port)
 	log.Printf("Connecting client (version %s) to server on %s:%d ...", version, config.Server, config.Port)
-	argsWithoutProg := os.Args[1:]
 
 	opts := grpc.WithInsecure()
 	cc, err := grpc.Dial(address, opts)
@@ -38,8 +43,11 @@ func main() {
 	}
 	defer cc.Close()
 
+	city := argsWithoutProg[0]
+	degrees := argsWithoutProg[1]
+
 	client := ggwpb.NewGgwClient(cc)
-	request := &ggwpb.WheaterRequest{City: argsWithoutProg[0], Degrees: argsWithoutProg[1]}
+	request := &ggwpb.WheaterRequest{City: city, Degrees: degrees}
 
 	resp, clErr := client.Now(context.Background(), request)
 	if clErr != nil {
