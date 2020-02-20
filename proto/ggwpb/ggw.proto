@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package ggw;
+package ggw.v1;
 option go_package = "ggwpb";
 
 message WheaterRequest {
