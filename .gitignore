@@ -6,3 +6,4 @@ server/server
 .idea/vcs.xml
 .idea/*
 .env
+certs/CA/*

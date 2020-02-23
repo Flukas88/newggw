@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"google.golang.org/grpc/credentials"
 	"io/ioutil"
 	"log"
 	"net"
@@ -69,13 +70,20 @@ func main() {
 	}
 
 	address := fmt.Sprintf("%s:%d", config.Host, config.Port)
+
+
+	// Server
+	creds, err := credentials.NewServerTLSFromFile("../certs/service.pem", "../certs/service.key")
+	if err != nil {
+		log.Fatalf("Failed to setup TLS: %v", err)
+	}
 	lis, err := net.Listen("tcp", address)
 	if err != nil {
 		log.Fatalf("Error %v", err)
 	}
 	fmt.Printf("Server (version %s) is listening on %v ...\n", version, address)
 
-	s := grpc.NewServer()
+	s := grpc.NewServer(grpc.Creds(creds))
 
 	SetupCloseHandler(s)
 

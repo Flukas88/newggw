@@ -2,8 +2,11 @@ package main
 
 import (
 	"context"
+	"crypto/tls"
+	"crypto/x509"
 	"encoding/json"
 	"fmt"
+	"google.golang.org/grpc/credentials"
 	"io/ioutil"
 	"log"
 	"os"
@@ -36,8 +39,20 @@ func main() {
 	address := fmt.Sprintf("%s:%d", config.Server, config.Port)
 	log.Printf("Connecting client (version %s) to server on %s:%d ...", version, config.Server, config.Port)
 
-	opts := grpc.WithInsecure()
-	cc, err := grpc.Dial(address, opts)
+	b, _ := ioutil.ReadFile("../certs/ca.cert")
+	cp := x509.NewCertPool()
+	if !cp.AppendCertsFromPEM(b) {
+		log.Printf("credentials: failed to append certificates")
+	}
+	config := &tls.Config{
+		InsecureSkipVerify: false,
+		RootCAs:            cp,
+	}
+	cc, err := grpc.Dial(address, grpc.WithTransportCredentials(credentials.NewTLS(config)))
+
+
+	//opts := grpc.WithInsecure()
+	//cc, err := grpc.Dial(address, opts)
 	if err != nil {
 		log.Fatal(err)
 	}
