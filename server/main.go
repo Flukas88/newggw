@@ -71,7 +71,6 @@ func main() {
 
 	address := fmt.Sprintf("%s:%d", config.Host, config.Port)
 
-
 	// Server
 	creds, err := credentials.NewServerTLSFromFile("../certs/service.pem", "../certs/service.key")
 	if err != nil {

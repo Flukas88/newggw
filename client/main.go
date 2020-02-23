@@ -6,10 +6,12 @@ import (
 	"crypto/x509"
 	"encoding/json"
 	"fmt"
-	"google.golang.org/grpc/credentials"
+
 	"io/ioutil"
 	"log"
 	"os"
+
+	"google.golang.org/grpc/credentials"
 
 	"github.com/Flukas88/newggw/proto/ggwpb"
 	"google.golang.org/grpc"
@@ -49,7 +51,6 @@ func main() {
 		RootCAs:            cp,
 	}
 	cc, err := grpc.Dial(address, grpc.WithTransportCredentials(credentials.NewTLS(config)))
-
 
 	//opts := grpc.WithInsecure()
 	//cc, err := grpc.Dial(address, opts)
