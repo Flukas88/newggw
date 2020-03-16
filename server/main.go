@@ -38,7 +38,7 @@ func (*server) Now(ctx context.Context, request *ggwpb.WheaterRequest) (*ggwpb.W
 	city := request.City
 	degrees := request.Degrees
 	var ct CityTemp
-	data, dataErr := getRespJson(city)
+	data, dataErr := getRespJSON(city)
 	if dataErr != nil {
 		return nil, dataErr
 	}
