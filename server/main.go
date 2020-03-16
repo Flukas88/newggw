@@ -4,13 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"google.golang.org/grpc/credentials"
 	"io/ioutil"
 	"log"
 	"net"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"google.golang.org/grpc/credentials"
 
 	"github.com/Flukas88/newggw/proto/ggwpb"
 	"google.golang.org/grpc"
@@ -72,7 +73,7 @@ func main() {
 	address := fmt.Sprintf("%s:%d", config.Host, config.Port)
 
 	// Server
-	creds, err := credentials.NewServerTLSFromFile("../certs/service.pem", "../certs/service.key")
+	creds, err := credentials.NewServerTLSFromFile("./certs/service.pem", "./certs/service.key")
 	if err != nil {
 		log.Fatalf("Failed to setup TLS: %v", err)
 	}
