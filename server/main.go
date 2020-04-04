@@ -7,9 +7,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
-	"os"
-	"os/signal"
-	"syscall"
 
 	"google.golang.org/grpc/credentials"
 
@@ -18,20 +15,6 @@ import (
 )
 
 type server struct {
-}
-
-// SetupCloseHandler creates a 'listener' on a new goroutine which will notify the
-// program if it receives an interrupt from the OS. We then handle this by calling
-// our clean up procedure and exiting the program.
-func SetupCloseHandler(s *grpc.Server) {
-	c := make(chan os.Signal, 2)
-	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
-	go func() {
-		<-c
-		fmt.Println("\nClosing...")
-		s.GracefulStop()
-		os.Exit(0)
-	}()
 }
 
 func (*server) Now(ctx context.Context, request *ggwpb.WheaterRequest) (*ggwpb.WheaterResponse, error) {
