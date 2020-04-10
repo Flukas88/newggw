@@ -6,7 +6,6 @@ import (
 	"crypto/x509"
 	"encoding/json"
 	"fmt"
-
 	"io/ioutil"
 	"log"
 	"os"
@@ -22,8 +21,8 @@ var version = "dev"
 
 func main() {
 
-	argsWithoutProg := os.Args[1:]
-	if len(argsWithoutProg) < 2 {
+	binArgs := os.Args[1:]
+	if len(binArgs) < 2 {
 		log.Printf("City or degrees not provided.")
 		os.Exit(2)
 	}
@@ -33,7 +32,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	err = json.Unmarshal([]byte(configFile), &config)
+	err = json.Unmarshal(configFile, &config)
 	if err != nil {
 		log.Fatal("Error in un-marshalling config JSON")
 	}
@@ -41,7 +40,7 @@ func main() {
 	address := fmt.Sprintf("%s:%d", config.Server, config.Port)
 	log.Printf("Connecting client (version %s) to server on %s:%d ...", version, config.Server, config.Port)
 
-	b, _ := ioutil.ReadFile("../certs/ca.cert")
+	b, _ := ioutil.ReadFile("./certs/ca.cert")
 	cp := x509.NewCertPool()
 	if !cp.AppendCertsFromPEM(b) {
 		log.Printf("credentials: failed to append certificates")
@@ -52,15 +51,13 @@ func main() {
 	}
 	cc, err := grpc.Dial(address, grpc.WithTransportCredentials(credentials.NewTLS(config)))
 
-	//opts := grpc.WithInsecure()
-	//cc, err := grpc.Dial(address, opts)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer cc.Close()
 
-	city := argsWithoutProg[0]
-	degrees := argsWithoutProg[1]
+	city := binArgs[0]
+	degrees := binArgs[1]
 
 	client := ggwpb.NewGgwClient(cc)
 	request := &ggwpb.WheaterRequest{City: city, Degrees: degrees}

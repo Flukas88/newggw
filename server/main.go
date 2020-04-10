@@ -4,13 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"google.golang.org/grpc/credentials"
 	"io/ioutil"
 	"log"
 	"net"
-	"os"
-	"os/signal"
-	"syscall"
+
+	"google.golang.org/grpc/credentials"
 
 	"github.com/Flukas88/newggw/proto/ggwpb"
 	"google.golang.org/grpc"
@@ -19,25 +17,11 @@ import (
 type server struct {
 }
 
-// SetupCloseHandler creates a 'listener' on a new goroutine which will notify the
-// program if it receives an interrupt from the OS. We then handle this by calling
-// our clean up procedure and exiting the program.
-func SetupCloseHandler(s *grpc.Server) {
-	c := make(chan os.Signal, 2)
-	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
-	go func() {
-		<-c
-		fmt.Println("\nClosing...")
-		s.GracefulStop()
-		os.Exit(0)
-	}()
-}
-
 func (*server) Now(ctx context.Context, request *ggwpb.WheaterRequest) (*ggwpb.WheaterResponse, error) {
 	city := request.City
 	degrees := request.Degrees
 	var ct CityTemp
-	data, dataErr := getRespJson(city)
+	data, dataErr := getRespJSON(city)
 	if dataErr != nil {
 		return nil, dataErr
 	}
@@ -72,7 +56,7 @@ func main() {
 	address := fmt.Sprintf("%s:%d", config.Host, config.Port)
 
 	// Server
-	creds, err := credentials.NewServerTLSFromFile("../certs/service.pem", "../certs/service.key")
+	creds, err := credentials.NewServerTLSFromFile("./certs/service.pem", "./certs/service.key")
 	if err != nil {
 		log.Fatalf("Failed to setup TLS: %v", err)
 	}

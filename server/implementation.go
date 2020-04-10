@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-func getRespJson(city string) (OpenWeather, error) {
+func getRespJSON(city string) (OpenWeather, error) {
 	token := os.Getenv("GGW")
 	url := fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather?q=%s&APPID=%s", city, token)
 	resp, getErr := http.Get(url)
