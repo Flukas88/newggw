@@ -62,7 +62,7 @@ func main() {
 	client := ggwpb.NewGgwClient(cc)
 	request := &ggwpb.GgwRequest{City: city, Degrees: degrees}
 
-	resp, clErr := client.Now(context.Background(), request)
+	resp, clErr := client.Ggw(context.Background(), request)
 	if clErr != nil {
 		log.Fatal(clErr)
 	}

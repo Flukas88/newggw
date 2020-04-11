@@ -15,5 +15,5 @@ message GgwResponse {
 }
 
 service Ggw {
-    rpc Now (GgwRequest) returns (GgwResponse) {};
+    rpc Ggw (GgwRequest) returns (GgwResponse) {};
 }

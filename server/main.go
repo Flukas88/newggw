@@ -17,7 +17,7 @@ import (
 type server struct {
 }
 
-func (*server) Now(ctx context.Context, request *ggwpb.GgwRequest) (*ggwpb.GgwResponse, error) {
+func (*server) Ggw(ctx context.Context, request *ggwpb.GgwRequest) (*ggwpb.GgwResponse, error) {
 	city := request.City
 	degrees := request.Degrees
 	var ct CityTemp
