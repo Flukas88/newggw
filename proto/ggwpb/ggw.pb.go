@@ -6,12 +6,11 @@ package ggwpb
 import (
 	context "context"
 	fmt "fmt"
-	math "math"
-
 	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -25,7 +24,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type WheaterRequest struct {
+type WeatherRequest struct {
 	City                 string   `protobuf:"bytes,1,opt,name=city,proto3" json:"city,omitempty"`
 	Degrees              string   `protobuf:"bytes,2,opt,name=degrees,proto3" json:"degrees,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -33,46 +32,46 @@ type WheaterRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *WheaterRequest) Reset()         { *m = WheaterRequest{} }
-func (m *WheaterRequest) String() string { return proto.CompactTextString(m) }
-func (*WheaterRequest) ProtoMessage()    {}
-func (*WheaterRequest) Descriptor() ([]byte, []int) {
+func (m *WeatherRequest) Reset()         { *m = WeatherRequest{} }
+func (m *WeatherRequest) String() string { return proto.CompactTextString(m) }
+func (*WeatherRequest) ProtoMessage()    {}
+func (*WeatherRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a225d695ed36f634, []int{0}
 }
 
-func (m *WheaterRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_WheaterRequest.Unmarshal(m, b)
+func (m *WeatherRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_WeatherRequest.Unmarshal(m, b)
 }
-func (m *WheaterRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_WheaterRequest.Marshal(b, m, deterministic)
+func (m *WeatherRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_WeatherRequest.Marshal(b, m, deterministic)
 }
-func (m *WheaterRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WheaterRequest.Merge(m, src)
+func (m *WeatherRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WeatherRequest.Merge(m, src)
 }
-func (m *WheaterRequest) XXX_Size() int {
-	return xxx_messageInfo_WheaterRequest.Size(m)
+func (m *WeatherRequest) XXX_Size() int {
+	return xxx_messageInfo_WeatherRequest.Size(m)
 }
-func (m *WheaterRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_WheaterRequest.DiscardUnknown(m)
+func (m *WeatherRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_WeatherRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_WheaterRequest proto.InternalMessageInfo
+var xxx_messageInfo_WeatherRequest proto.InternalMessageInfo
 
-func (m *WheaterRequest) GetCity() string {
+func (m *WeatherRequest) GetCity() string {
 	if m != nil {
 		return m.City
 	}
 	return ""
 }
 
-func (m *WheaterRequest) GetDegrees() string {
+func (m *WeatherRequest) GetDegrees() string {
 	if m != nil {
 		return m.Degrees
 	}
 	return ""
 }
 
-type WheaterResponse struct {
+type WeatherResponse struct {
 	City                 string   `protobuf:"bytes,1,opt,name=city,proto3" json:"city,omitempty"`
 	Temp                 string   `protobuf:"bytes,2,opt,name=temp,proto3" json:"temp,omitempty"`
 	Degrees              string   `protobuf:"bytes,3,opt,name=degrees,proto3" json:"degrees,omitempty"`
@@ -81,46 +80,46 @@ type WheaterResponse struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *WheaterResponse) Reset()         { *m = WheaterResponse{} }
-func (m *WheaterResponse) String() string { return proto.CompactTextString(m) }
-func (*WheaterResponse) ProtoMessage()    {}
-func (*WheaterResponse) Descriptor() ([]byte, []int) {
+func (m *WeatherResponse) Reset()         { *m = WeatherResponse{} }
+func (m *WeatherResponse) String() string { return proto.CompactTextString(m) }
+func (*WeatherResponse) ProtoMessage()    {}
+func (*WeatherResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a225d695ed36f634, []int{1}
 }
 
-func (m *WheaterResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_WheaterResponse.Unmarshal(m, b)
+func (m *WeatherResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_WeatherResponse.Unmarshal(m, b)
 }
-func (m *WheaterResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_WheaterResponse.Marshal(b, m, deterministic)
+func (m *WeatherResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_WeatherResponse.Marshal(b, m, deterministic)
 }
-func (m *WheaterResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WheaterResponse.Merge(m, src)
+func (m *WeatherResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WeatherResponse.Merge(m, src)
 }
-func (m *WheaterResponse) XXX_Size() int {
-	return xxx_messageInfo_WheaterResponse.Size(m)
+func (m *WeatherResponse) XXX_Size() int {
+	return xxx_messageInfo_WeatherResponse.Size(m)
 }
-func (m *WheaterResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_WheaterResponse.DiscardUnknown(m)
+func (m *WeatherResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_WeatherResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_WheaterResponse proto.InternalMessageInfo
+var xxx_messageInfo_WeatherResponse proto.InternalMessageInfo
 
-func (m *WheaterResponse) GetCity() string {
+func (m *WeatherResponse) GetCity() string {
 	if m != nil {
 		return m.City
 	}
 	return ""
 }
 
-func (m *WheaterResponse) GetTemp() string {
+func (m *WeatherResponse) GetTemp() string {
 	if m != nil {
 		return m.Temp
 	}
 	return ""
 }
 
-func (m *WheaterResponse) GetDegrees() string {
+func (m *WeatherResponse) GetDegrees() string {
 	if m != nil {
 		return m.Degrees
 	}
@@ -128,8 +127,8 @@ func (m *WheaterResponse) GetDegrees() string {
 }
 
 func init() {
-	proto.RegisterType((*WheaterRequest)(nil), "ggw.v1.WeatherRequest")
-	proto.RegisterType((*WheaterResponse)(nil), "ggw.v1.WeatherResponse")
+	proto.RegisterType((*WeatherRequest)(nil), "ggw.v1.WeatherRequest")
+	proto.RegisterType((*WeatherResponse)(nil), "ggw.v1.WeatherResponse")
 }
 
 func init() { proto.RegisterFile("ggw.proto", fileDescriptor_a225d695ed36f634) }
@@ -138,7 +137,7 @@ var fileDescriptor_a225d695ed36f634 = []byte{
 	// 168 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x4c, 0x4f, 0x2f, 0xd7,
 	0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x03, 0x31, 0xcb, 0x0c, 0x95, 0xec, 0xb8, 0xf8, 0xc2,
-	0x33, 0x52, 0x13, 0x4b, 0x52, 0x8b, 0x82, 0x52, 0x0b, 0x4b, 0x53, 0x8b, 0x4b, 0x84, 0x84, 0xb8,
+	0x53, 0x13, 0x4b, 0x32, 0x52, 0x8b, 0x82, 0x52, 0x0b, 0x4b, 0x53, 0x8b, 0x4b, 0x84, 0x84, 0xb8,
 	0x58, 0x92, 0x33, 0x4b, 0x2a, 0x25, 0x18, 0x15, 0x18, 0x35, 0x38, 0x83, 0xc0, 0x6c, 0x21, 0x09,
 	0x2e, 0xf6, 0x94, 0xd4, 0xf4, 0xa2, 0xd4, 0xd4, 0x62, 0x09, 0x26, 0xb0, 0x30, 0x8c, 0xab, 0x14,
 	0xcc, 0xc5, 0x0f, 0xd7, 0x5f, 0x5c, 0x90, 0x9f, 0x57, 0x9c, 0x8a, 0xd5, 0x00, 0x21, 0x2e, 0x96,
@@ -146,7 +145,7 @@ var fileDescriptor_a225d695ed36f634 = []byte{
 	0x98, 0xdd, 0xd3, 0xcb, 0x85, 0x2c, 0xb8, 0x98, 0xfd, 0xf2, 0xcb, 0x85, 0xc4, 0xf4, 0x20, 0x6e,
 	0xd5, 0x43, 0x75, 0xa8, 0x94, 0x38, 0x86, 0x38, 0xc4, 0x01, 0x4a, 0x0c, 0x4e, 0xec, 0x51, 0xac,
 	0xe9, 0xe9, 0xe5, 0x05, 0x49, 0x49, 0x6c, 0x60, 0xdf, 0x1a, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff,
-	0x48, 0x94, 0xb0, 0x2a, 0xfa, 0x00, 0x00, 0x00,
+	0x7c, 0xbc, 0x42, 0x1d, 0xfa, 0x00, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -161,7 +160,7 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type GgwClient interface {
-	Now(ctx context.Context, in *WheaterRequest, opts ...grpc.CallOption) (*WheaterResponse, error)
+	Now(ctx context.Context, in *WeatherRequest, opts ...grpc.CallOption) (*WeatherResponse, error)
 }
 
 type ggwClient struct {
@@ -172,8 +171,8 @@ func NewGgwClient(cc grpc.ClientConnInterface) GgwClient {
 	return &ggwClient{cc}
 }
 
-func (c *ggwClient) Now(ctx context.Context, in *WheaterRequest, opts ...grpc.CallOption) (*WheaterResponse, error) {
-	out := new(WheaterResponse)
+func (c *ggwClient) Now(ctx context.Context, in *WeatherRequest, opts ...grpc.CallOption) (*WeatherResponse, error) {
+	out := new(WeatherResponse)
 	err := c.cc.Invoke(ctx, "/ggw.v1.Ggw/Now", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -183,14 +182,14 @@ func (c *ggwClient) Now(ctx context.Context, in *WheaterRequest, opts ...grpc.Ca
 
 // GgwServer is the server API for Ggw service.
 type GgwServer interface {
-	Now(context.Context, *WheaterRequest) (*WheaterResponse, error)
+	Now(context.Context, *WeatherRequest) (*WeatherResponse, error)
 }
 
 // UnimplementedGgwServer can be embedded to have forward compatible implementations.
 type UnimplementedGgwServer struct {
 }
 
-func (*UnimplementedGgwServer) Now(ctx context.Context, req *WheaterRequest) (*WheaterResponse, error) {
+func (*UnimplementedGgwServer) Now(ctx context.Context, req *WeatherRequest) (*WeatherResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Now not implemented")
 }
 
@@ -199,7 +198,7 @@ func RegisterGgwServer(s *grpc.Server, srv GgwServer) {
 }
 
 func _Ggw_Now_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WheaterRequest)
+	in := new(WeatherRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -211,7 +210,7 @@ func _Ggw_Now_Handler(srv interface{}, ctx context.Context, dec func(interface{}
 		FullMethod: "/ggw.v1.Ggw/Now",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GgwServer).Now(ctx, req.(*WheaterRequest))
+		return srv.(GgwServer).Now(ctx, req.(*WeatherRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
