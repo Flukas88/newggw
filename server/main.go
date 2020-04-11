@@ -17,7 +17,7 @@ import (
 type server struct {
 }
 
-func (*server) Now(ctx context.Context, request *ggwpb.WheaterRequest) (*ggwpb.WheaterResponse, error) {
+func (*server) Now(ctx context.Context, request *ggwpb.WeatherRequest) (*ggwpb.WeatherResponse, error) {
 	city := request.City
 	degrees := request.Degrees
 	var ct CityTemp
@@ -30,7 +30,7 @@ func (*server) Now(ctx context.Context, request *ggwpb.WheaterRequest) (*ggwpb.W
 	if getErr != nil {
 		return nil, getErr
 	}
-	response := &ggwpb.WheaterResponse{
+	response := &ggwpb.WeatherResponse{
 		City:    ct.City,
 		Temp:    ct.Temp,
 		Degrees: ct.Degrees,

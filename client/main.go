@@ -60,7 +60,7 @@ func main() {
 	degrees := binArgs[1]
 
 	client := ggwpb.NewGgwClient(cc)
-	request := &ggwpb.WheaterRequest{City: city, Degrees: degrees}
+	request := &ggwpb.WeatherRequest{City: city, Degrees: degrees}
 
 	resp, clErr := client.Now(context.Background(), request)
 	if clErr != nil {
