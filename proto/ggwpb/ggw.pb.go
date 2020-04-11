@@ -6,11 +6,12 @@ package ggwpb
 import (
 	context "context"
 	fmt "fmt"
+	math "math"
+
 	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -127,8 +128,8 @@ func (m *WheaterResponse) GetDegrees() string {
 }
 
 func init() {
-	proto.RegisterType((*WheaterRequest)(nil), "ggw.v1.WheaterRequest")
-	proto.RegisterType((*WheaterResponse)(nil), "ggw.v1.WheaterResponse")
+	proto.RegisterType((*WheaterRequest)(nil), "ggw.v1.WeatherRequest")
+	proto.RegisterType((*WheaterResponse)(nil), "ggw.v1.WeatherResponse")
 }
 
 func init() { proto.RegisterFile("ggw.proto", fileDescriptor_a225d695ed36f634) }

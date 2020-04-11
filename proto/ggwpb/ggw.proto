@@ -3,17 +3,17 @@ syntax = "proto3";
 package ggw.v1;
 option go_package = "ggwpb";
 
-message WheaterRequest {
+message WeatherRequest {
     string city = 1;
     string degrees = 2;
 }
 
-message WheaterResponse {
+message WeatherResponse {
     string city = 1;
     string temp = 2;
     string degrees = 3;
 }
 
 service Ggw {
-    rpc Now(WheaterRequest) returns (WheaterResponse) {};
+    rpc Now (WeatherRequest) returns (WeatherResponse) {};
 }
