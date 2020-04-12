@@ -1,5 +1,9 @@
 package main
 
+import (
+	"log"
+)
+
 // OpenWeather is the JSON structure of a api call
 type OpenWeather struct {
 	Coord struct {
@@ -58,4 +62,5 @@ type ServerConfig struct {
 // App is the app
 type App struct {
 	Config ServerConfig
+	Logger *log.Logger
 }

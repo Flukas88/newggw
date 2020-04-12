@@ -3,13 +3,14 @@ package main
 import (
 	"io/ioutil"
 	"log"
+	"os"
 
 	json "github.com/json-iterator/go"
 )
 
 func NewApp() *App {
 	var config ClientConfig
-
+	logger := log.New(os.Stdout, "ClientApp - ", log.LstdFlags)
 	// Reading config
 	configFile, err := ioutil.ReadFile("client.json")
 	if err != nil {
@@ -24,5 +25,6 @@ func NewApp() *App {
 
 	return &App{
 		Config: config,
+		Logger: logger,
 	}
 }

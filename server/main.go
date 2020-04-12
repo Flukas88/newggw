@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net"
 
 	"google.golang.org/grpc/credentials"
@@ -24,7 +23,6 @@ func (*server) Ggw(ctx context.Context, request *ggwpb.GgwRequest) (*ggwpb.GgwRe
 		return nil, dataErr
 	}
 	getErr := ct.getCityInfo(city, degrees, data)
-	log.Printf("Responding for (%s,%s)", city, degrees)
 	if getErr != nil {
 		return nil, getErr
 	}
@@ -47,13 +45,13 @@ func main() {
 	// Server
 	creds, err := credentials.NewServerTLSFromFile("./certs/service.pem", "./certs/service.key")
 	if err != nil {
-		log.Fatalf("Failed to setup TLS: %v", err)
+		app.Logger.Fatalf("Failed to setup TLS: %v", err)
 	}
 	lis, err := net.Listen("tcp", address)
 	if err != nil {
-		log.Fatalf("Error %v", err)
+		app.Logger.Fatalf("Error %v", err)
 	}
-	fmt.Printf("Server (version %s) is listening on %v ...\n", version, address)
+	app.Logger.Printf("Server (version %s) is listening on %v ...\n", version, address)
 
 	s := grpc.NewServer(grpc.Creds(creds))
 
@@ -63,7 +61,7 @@ func main() {
 
 	srvErr := s.Serve(lis)
 	if srvErr != nil {
-		log.Fatal(srvErr)
+		app.Logger.Fatal(srvErr)
 	}
 
 }

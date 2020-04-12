@@ -1,5 +1,9 @@
 package main
 
+import (
+	"log"
+)
+
 // ClientConfig is the client config
 type ClientConfig struct {
 	Server string `json:"server"`
@@ -9,4 +13,5 @@ type ClientConfig struct {
 // App is the app
 type App struct {
 	Config ClientConfig
+	Logger *log.Logger
 }
