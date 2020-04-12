@@ -12,6 +12,7 @@ type ClientConfig struct {
 
 // App is the app
 type App struct {
-	Config ClientConfig
-	Logger *log.Logger
+	Config    ClientConfig
+	OutLogger *log.Logger
+	ErrLogger *log.Logger
 }

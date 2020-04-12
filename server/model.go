@@ -61,6 +61,7 @@ type ServerConfig struct {
 
 // App is the app
 type App struct {
-	Config ServerConfig
-	Logger *log.Logger
+	Config    ServerConfig
+	OutLogger *log.Logger
+	ErrLogger *log.Logger
 }

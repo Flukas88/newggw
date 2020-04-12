@@ -10,7 +10,8 @@ import (
 
 func NewApp() *App {
 	var config ServerConfig
-	logger := log.New(os.Stdout, "ServerApp - ", log.LstdFlags)
+	outLogger := log.New(os.Stdout, "ServerApp - ", log.LstdFlags)
+	errLogger := log.New(os.Stderr, "ServerApp - ", log.LstdFlags)
 	// Reading config
 	configFile, err := ioutil.ReadFile("server.json")
 	if err != nil {
@@ -24,7 +25,8 @@ func NewApp() *App {
 	}
 
 	return &App{
-		Config: config,
-		Logger: logger,
+		Config:    config,
+		OutLogger: outLogger,
+		ErrLogger: errLogger,
 	}
 }

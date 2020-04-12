@@ -45,13 +45,13 @@ func main() {
 	// Server
 	creds, err := credentials.NewServerTLSFromFile("./certs/service.pem", "./certs/service.key")
 	if err != nil {
-		app.Logger.Fatalf("Failed to setup TLS: %v", err)
+		app.ErrLogger.Fatalf("Failed to setup TLS: %v", err)
 	}
 	lis, err := net.Listen("tcp", address)
 	if err != nil {
-		app.Logger.Fatalf("Error %v", err)
+		app.ErrLogger.Fatalf("Error %v", err)
 	}
-	app.Logger.Printf("Server (version %s) is listening on %v ...\n", version, address)
+	app.OutLogger.Printf("Server (version %s) is listening on %v ...\n", version, address)
 
 	s := grpc.NewServer(grpc.Creds(creds))
 
@@ -61,7 +61,7 @@ func main() {
 
 	srvErr := s.Serve(lis)
 	if srvErr != nil {
-		app.Logger.Fatal(srvErr)
+		app.ErrLogger.Fatal(srvErr)
 	}
 
 }
