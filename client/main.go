@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"crypto/x509"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -18,9 +19,13 @@ var version = "dev"
 
 func main() {
 	app := NewApp()
-	binArgs := os.Args[1:]
-	if len(binArgs) < 2 {
-		app.ErrLogger.Printf("City or degrees not provided.")
+
+	city := flag.String("city", "Dublin", "The City")
+	degrees := flag.String("degrees", "C", "C or F")
+
+	flag.Parse()
+	if flag.NFlag() < 2 {
+		flag.Usage()
 		os.Exit(2)
 	}
 
@@ -44,11 +49,8 @@ func main() {
 	}
 	defer cc.Close()
 
-	city := binArgs[0]
-	degrees := binArgs[1]
-
 	client := ggwpb.NewGgwClient(cc)
-	request := &ggwpb.GgwRequest{City: city, Degrees: degrees}
+	request := &ggwpb.GgwRequest{City: *city, Degrees: *degrees}
 
 	resp, clErr := client.Ggw(context.Background(), request)
 	if clErr != nil {
