@@ -1,5 +1,5 @@
 all: build
-version=`git rev-parse --short HEAD`
+version=`git describe --tags --abbrev=12`
 
 build:
 		go build -ldflags="-X 'main.version=$(version)'"
