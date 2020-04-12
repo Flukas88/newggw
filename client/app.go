@@ -1,9 +1,10 @@
 package main
 
 import (
-	"encoding/json"
 	"io/ioutil"
 	"log"
+
+	json "github.com/json-iterator/go"
 )
 
 func NewApp() *App {
