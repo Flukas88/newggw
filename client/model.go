@@ -6,6 +6,7 @@ type ClientConfig struct {
 	Port   int    `json:"port"`
 }
 
+// App is the app
 type App struct {
 	Config ClientConfig
 }

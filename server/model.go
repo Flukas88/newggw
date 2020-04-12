@@ -54,3 +54,8 @@ type ServerConfig struct {
 	Host string `json:"host"`
 	Port int    `json:"port"`
 }
+
+// App is the app
+type App struct {
+	Config ServerConfig
+}

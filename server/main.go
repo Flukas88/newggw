@@ -2,9 +2,7 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net"
 
@@ -38,22 +36,13 @@ func (*server) Ggw(ctx context.Context, request *ggwpb.GgwRequest) (*ggwpb.GgwRe
 	return response, nil
 }
 
-var config ServerConfig
 var version = "dev"
 
 func main() {
 
-	// Reading config
-	configFile, err := ioutil.ReadFile("server.json")
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-	err = json.Unmarshal([]byte(configFile), &config)
-	if err != nil {
-		log.Fatal("Error in un-marshalling config JSON")
-	}
+	app := NewApp()
 
-	address := fmt.Sprintf("%s:%d", config.Host, config.Port)
+	address := fmt.Sprintf("%s:%d", app.Config.Host, app.Config.Port)
 
 	// Server
 	creds, err := credentials.NewServerTLSFromFile("./certs/service.pem", "./certs/service.key")
