@@ -1,12 +1,13 @@
 package main
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
+
+	json "github.com/json-iterator/go"
 )
 
 func getRespJSON(city string) (OpenWeather, error) {

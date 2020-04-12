@@ -1,8 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"testing"
+
+	json "github.com/json-iterator/go"
 )
 
 func Test_getCityInfo(t *testing.T) {
