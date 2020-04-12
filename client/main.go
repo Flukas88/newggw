@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/tls"
 	"crypto/x509"
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -16,7 +15,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-var config ClientConfig
 var version = "dev"
 
 func main() {
@@ -27,18 +25,10 @@ func main() {
 		os.Exit(2)
 	}
 
-	// Reading config
-	configFile, err := ioutil.ReadFile("client.json")
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-	err = json.Unmarshal(configFile, &config)
-	if err != nil {
-		log.Fatal("Error in un-marshalling config JSON")
-	}
+	app := NewApp()
 
-	address := fmt.Sprintf("%s:%d", config.Server, config.Port)
-	log.Printf("Connecting client (version %s) to server on %s:%d ...", version, config.Server, config.Port)
+	address := fmt.Sprintf("%s:%d", app.Config.Server, app.Config.Port)
+	log.Printf("Connecting client (version %s) to server on %s:%d ...", version, app.Config.Server, app.Config.Port)
 
 	b, _ := ioutil.ReadFile("./certs/ca.cert")
 	cp := x509.NewCertPool()
