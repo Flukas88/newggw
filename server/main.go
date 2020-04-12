@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"net"
 
-	"google.golang.org/grpc/credentials"
-
 	"github.com/Flukas88/newggw/proto/ggwpb"
 	"google.golang.org/grpc"
 )
@@ -37,16 +35,13 @@ func (*server) Ggw(ctx context.Context, request *ggwpb.GgwRequest) (*ggwpb.GgwRe
 var version = "dev"
 
 func main() {
-
-	app := NewApp()
-
+	app := NewApp("./certs/service.key", "./certs/service.pem")
 	address := fmt.Sprintf("%s:%d", app.Config.Host, app.Config.Port)
-
-	// Server
-	creds, err := credentials.NewServerTLSFromFile("./certs/service.pem", "./certs/service.key")
-	if err != nil {
-		app.ErrLogger.Fatalf("Failed to setup TLS: %v", err)
+	creds, credErr := app.setCreds()
+	if credErr != nil {
+		app.ErrLogger.Fatal(credErr)
 	}
+
 	lis, err := net.Listen("tcp", address)
 	if err != nil {
 		app.ErrLogger.Fatalf("Error %v", err)

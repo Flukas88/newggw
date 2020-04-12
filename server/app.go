@@ -6,9 +6,10 @@ import (
 	"os"
 
 	json "github.com/json-iterator/go"
+	"google.golang.org/grpc/credentials"
 )
 
-func NewApp() *App {
+func NewApp(keyFile, certFile string) *App {
 	var config ServerConfig
 	outLogger := log.New(os.Stdout, "ServerApp - ", log.LstdFlags)
 	errLogger := log.New(os.Stderr, "ServerApp - ", log.LstdFlags)
@@ -28,5 +29,18 @@ func NewApp() *App {
 		Config:    config,
 		OutLogger: outLogger,
 		ErrLogger: errLogger,
+		CertFile:  certFile,
+		KeyFile:   keyFile,
 	}
+}
+
+// setCreds sets the credentuals
+func (a App) setCreds() (credentials.TransportCredentials, error) {
+	// Server
+	creds, err := credentials.NewServerTLSFromFile(a.CertFile, a.KeyFile)
+	if err != nil {
+		a.ErrLogger.Println("failed to setup TLS")
+		return nil, err
+	}
+	return creds, nil
 }

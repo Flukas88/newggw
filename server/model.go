@@ -64,4 +64,6 @@ type App struct {
 	Config    ServerConfig
 	OutLogger *log.Logger
 	ErrLogger *log.Logger
+	CertFile  string
+	KeyFile   string
 }
