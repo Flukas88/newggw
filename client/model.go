@@ -15,4 +15,5 @@ type App struct {
 	Config    ClientConfig
 	OutLogger *log.Logger
 	ErrLogger *log.Logger
+	CertFile  string
 }
