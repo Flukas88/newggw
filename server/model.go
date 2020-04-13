@@ -2,6 +2,8 @@ package main
 
 import (
 	"log"
+
+	"google.golang.org/grpc"
 )
 
 // OpenWeather is the JSON structure of a api call
@@ -66,4 +68,5 @@ type App struct {
 	ErrLogger *log.Logger
 	CertFile  string
 	KeyFile   string
+	server    *grpc.Server
 }

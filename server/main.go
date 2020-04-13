@@ -6,7 +6,6 @@ import (
 	"net"
 
 	"github.com/Flukas88/newggw/proto/ggwpb"
-	"google.golang.org/grpc"
 )
 
 type server struct {
@@ -37,24 +36,17 @@ var version = "dev"
 func main() {
 	app := NewApp("./certs/service.key", "./certs/service.pem")
 	address := fmt.Sprintf("%s:%d", app.Config.Host, app.Config.Port)
-	creds, credErr := app.setCreds()
-	if credErr != nil {
-		app.ErrLogger.Fatal(credErr)
-	}
-
 	lis, err := net.Listen("tcp", address)
 	if err != nil {
 		app.ErrLogger.Fatalf("Error %v", err)
 	}
 	app.OutLogger.Printf("Server (version %s) is listening on %v ...\n", version, address)
 
-	s := grpc.NewServer(grpc.Creds(creds))
+	app.SetupCloseHandler()
 
-	SetupCloseHandler(s)
+	ggwpb.RegisterGgwServer(app.server, &server{})
 
-	ggwpb.RegisterGgwServer(s, &server{})
-
-	srvErr := s.Serve(lis)
+	srvErr := app.server.Serve(lis)
 	if srvErr != nil {
 		app.ErrLogger.Fatal(srvErr)
 	}
