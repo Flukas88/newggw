@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -20,12 +19,12 @@ func NewApp(keyFile, certFile string) *App {
 	// Reading config
 	configFile, err := ioutil.ReadFile("server.json")
 	if err != nil {
-		log.Fatal(err.Error())
+		errLogger.Fatal(err.Error())
 		return nil
 	}
 	err = json.Unmarshal(configFile, &config)
 	if err != nil {
-		log.Fatal("Error in un-marshalling config JSON")
+		errLogger.Fatal("Error in un-marshalling config JSON")
 		return nil
 	}
 
@@ -53,7 +52,7 @@ func (a *App) SetupCloseHandler() {
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 	go func() {
 		<-c
-		fmt.Println("\nClosing...")
+		a.OutLogger.Println("\nClosing...")
 		a.server.GracefulStop()
 		os.Exit(0)
 	}()
