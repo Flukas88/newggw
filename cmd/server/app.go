@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/Flukas88/newggw/pkg/models/models/server"
+	"github.com/Flukas88/newggw/pkg/models/server"
 	json "github.com/json-iterator/go"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"

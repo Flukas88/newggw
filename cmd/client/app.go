@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/Flukas88/newggw/pkg/models/models/client"
+	"github.com/Flukas88/newggw/pkg/models/client"
 	json "github.com/json-iterator/go"
 )
 
