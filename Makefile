@@ -7,13 +7,13 @@ gofmt:
 	go fmt ./...
 
 build_server:
-	$(MAKE) -C server build
+	$(MAKE) -C cmd/server build
 
 build_client:
-	$(MAKE) -C client build
+	$(MAKE) -C cmd/client build
 
 clean_server:
-	$(MAKE) -C server clean
+	$(MAKE) -C cmd/server clean
 
 clean_client:
-	$(MAKE) -C client clean
+	$(MAKE) -C cmd/client clean
