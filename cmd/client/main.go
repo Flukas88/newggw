@@ -9,6 +9,7 @@ import (
 	"google.golang.org/grpc/credentials"
 
 	"github.com/Flukas88/newggw/proto/ggwpb"
+
 	"google.golang.org/grpc"
 )
 
@@ -29,7 +30,7 @@ func main() {
 	address := fmt.Sprintf("%s:%d", app.Config.Server, app.Config.Port)
 	app.OutLogger.Printf("Connecting client (version %s) to server on %s:%d ...", version, app.Config.Server, app.Config.Port)
 
-	config, configErr := app.setCreds()
+	config, configErr := app.SetCreds()
 	if configErr != nil {
 		app.ErrLogger.Fatalf(configErr.Error())
 	}

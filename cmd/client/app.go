@@ -1,19 +1,16 @@
 package main
 
 import (
-	"crypto/tls"
-	"crypto/x509"
-	"errors"
 	"io/ioutil"
 	"log"
 	"os"
 
-	"github.com/Flukas88/newggw/pkg/models/client"
+	cl "github.com/Flukas88/newggw/pkg/models/client"
 	json "github.com/json-iterator/go"
 )
 
-func NewApp(certFile string) *client.App {
-	var config client.ClientConfig
+func NewApp(certFile string) *cl.App {
+	var config cl.ClientConfig
 	outLogger := log.New(os.Stdout, "ClientApp - ", log.LstdFlags)
 	errLogger := log.New(os.Stderr, "ClientApp - ", log.LstdFlags)
 	// Reading config
@@ -28,23 +25,10 @@ func NewApp(certFile string) *client.App {
 		return nil
 	}
 
-	return &client.App{
+	return &cl.App{
 		Config:    config,
 		OutLogger: outLogger,
 		ErrLogger: errLogger,
 		CertFile:  certFile,
 	}
-}
-
-func (a client.App) setCreds() (*tls.Config, error) {
-	b, _ := ioutil.ReadFile(a.CertFile)
-	cp := x509.NewCertPool()
-	if !cp.AppendCertsFromPEM(b) {
-		return nil, errors.New("credentials: failed to append certificates")
-	}
-	config := &tls.Config{
-		InsecureSkipVerify: false,
-		RootCAs:            cp,
-	}
-	return config, nil
 }

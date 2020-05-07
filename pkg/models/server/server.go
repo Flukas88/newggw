@@ -2,7 +2,11 @@ package server
 
 import (
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
 
+	"github.com/Flukas88/newggw/pkg/helpers"
 	"google.golang.org/grpc"
 )
 
@@ -68,5 +72,33 @@ type App struct {
 	ErrLogger *log.Logger
 	CertFile  string
 	KeyFile   string
-	server    *grpc.Server
+	Server    *grpc.Server
+}
+
+// SetupCloseHandler creates a 'listener' on a new goroutine which will notify the
+// program if it receives an interrupt from the OS. We then handle this by calling
+// our clean up procedure and exiting the program.
+func (a *App) SetupCloseHandler() {
+	c := make(chan os.Signal, 2)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
+		a.OutLogger.Println("\nClosing...")
+		a.Server.GracefulStop()
+		os.Exit(0)
+	}()
+}
+
+// GetCityInfo gets "city" weather in "degrees"
+func (c *CityTemp) GetCityInfo(city, degrees string, data OpenWeather) error {
+	Conversions := map[string]helpers.ConvertFn{
+		"C": helpers.Kelvin2Celsius,
+		"F": helpers.Kelvin2Fahrenheit,
+	}
+
+	c.City = city
+	c.Temp = Conversions[degrees](data.Main.Temp)
+	c.Degrees = degrees
+
+	return nil
 }

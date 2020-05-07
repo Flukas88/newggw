@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 
+	srv "github.com/Flukas88/newggw/pkg/models/server"
 	"github.com/Flukas88/newggw/proto/ggwpb"
 )
 
@@ -14,12 +15,12 @@ type server struct {
 func (*server) Ggw(ctx context.Context, request *ggwpb.GgwRequest) (*ggwpb.GgwResponse, error) {
 	city := request.City
 	degrees := request.Degrees
-	var ct CityTemp
-	data, dataErr := getRespJSON(city)
+	var ct srv.CityTemp
+	data, dataErr := GetRespJSON(city)
 	if dataErr != nil {
 		return nil, dataErr
 	}
-	getErr := ct.getCityInfo(city, degrees, data)
+	getErr := ct.GetCityInfo(city, degrees, data)
 	if getErr != nil {
 		return nil, getErr
 	}
@@ -44,9 +45,9 @@ func main() {
 
 	app.SetupCloseHandler()
 
-	ggwpb.RegisterGgwServer(app.server, &server{})
+	ggwpb.RegisterGgwServer(app.Server, &server{})
 
-	srvErr := app.server.Serve(lis)
+	srvErr := app.Server.Serve(lis)
 	if srvErr != nil {
 		app.ErrLogger.Fatal(srvErr)
 	}
