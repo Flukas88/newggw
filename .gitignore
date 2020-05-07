@@ -1,5 +1,3 @@
-client/client
-server/server
 .idea/codeStyles/
 .idea/modules.xml
 .idea/newggw.iml
@@ -7,3 +5,5 @@ server/server
 .idea/*
 .env
 certs/CA/*
+cmd/server/server
+cmd/client/client
