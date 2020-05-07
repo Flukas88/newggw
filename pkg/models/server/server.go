@@ -59,15 +59,15 @@ type CityTemp struct {
 	Degrees string `json:"degrees"`
 }
 
-// ServerConfig is the JSON config for the server
-type ServerConfig struct {
+// Config is the JSON config for the server
+type Config struct {
 	Host string `json:"host"`
 	Port int    `json:"port"`
 }
 
 // App is the app
 type App struct {
-	Config    ServerConfig
+	Config    Config
 	OutLogger *log.Logger
 	ErrLogger *log.Logger
 	CertFile  string

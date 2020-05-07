@@ -8,15 +8,15 @@ import (
 	"log"
 )
 
-// ClientConfig is the client config
-type ClientConfig struct {
+// Config is the client config
+type Config struct {
 	Server string `json:"server"`
 	Port   int    `json:"port"`
 }
 
 // App is the app
 type App struct {
-	Config    ClientConfig
+	Config    Config
 	OutLogger *log.Logger
 	ErrLogger *log.Logger
 	CertFile  string

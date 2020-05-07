@@ -12,7 +12,7 @@ import (
 )
 
 func NewApp(keyFile, certFile string) *srv.App {
-	var config srv.ServerConfig
+	var config srv.Config
 	outLogger := log.New(os.Stdout, "ServerApp - ", log.LstdFlags)
 	errLogger := log.New(os.Stderr, "ServerApp - ", log.LstdFlags)
 	// Reading config

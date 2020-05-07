@@ -10,7 +10,7 @@ import (
 )
 
 func NewApp(certFile string) *cl.App {
-	var config cl.ClientConfig
+	var config cl.Config
 	outLogger := log.New(os.Stdout, "ClientApp - ", log.LstdFlags)
 	errLogger := log.New(os.Stderr, "ClientApp - ", log.LstdFlags)
 	// Reading config
