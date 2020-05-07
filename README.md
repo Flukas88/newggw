@@ -4,7 +4,7 @@
 gRPC client/server for my old gogetwheater project
 
 
-## How to bulid it
+## How to build it
     $ make
     $ make build_client
     $ make build_server
