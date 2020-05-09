@@ -40,7 +40,12 @@ func main() {
 	if err != nil {
 		app.ErrLogger.Fatal(err)
 	}
-	defer cc.Close()
+	defer func() {
+		err := cc.Close()
+		if err != nil {
+			app.ErrLogger.Fatal(err)
+		}
+	}()
 
 	client := ggwpb.NewGgwClient(cc)
 	request := &ggwpb.GgwRequest{City: *city, Degrees: *degrees}
