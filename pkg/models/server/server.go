@@ -65,7 +65,7 @@ type Config struct {
 	Port int    `json:"port"`
 }
 
-// App is the app
+// App is the server app
 type App struct {
 	Config    Config
 	OutLogger *log.Logger

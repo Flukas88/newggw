@@ -14,7 +14,7 @@ type Config struct {
 	Port   int    `json:"port"`
 }
 
-// App is the app
+// App is the client app
 type App struct {
 	Config    Config
 	OutLogger *log.Logger
@@ -22,6 +22,7 @@ type App struct {
 	CertFile  string
 }
 
+// SetCreds sets the credentials for the secure connection to the server
 func (a App) SetCreds() (*tls.Config, error) {
 	b, _ := ioutil.ReadFile(a.CertFile)
 	cp := x509.NewCertPool()

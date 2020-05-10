@@ -6,11 +6,9 @@ import (
 	"fmt"
 	"os"
 
-	"google.golang.org/grpc/credentials"
-
 	"github.com/Flukas88/newggw/proto/ggwpb"
-
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 var version = "dev"
