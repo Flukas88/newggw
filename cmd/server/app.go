@@ -16,20 +16,20 @@ func NewApp(keyFile, certFile string) *srv.App {
 	outLogger := log.New(os.Stdout, "ServerApp - ", log.LstdFlags)
 	errLogger := log.New(os.Stderr, "ServerApp - ", log.LstdFlags)
 	// Reading config
-	configFile, err := ioutil.ReadFile("server.json")
-	if err != nil {
-		errLogger.Fatal(err.Error())
+	configFile, loadErr := ioutil.ReadFile("server.json")
+	if loadErr != nil {
+		errLogger.Fatalf("error in reading server config file: %v", loadErr)
 		return nil
 	}
-	err = json.Unmarshal(configFile, &config)
-	if err != nil {
-		errLogger.Fatal("Error in un-marshalling config JSON")
+	jsonErr := json.Unmarshal(configFile, &config)
+	if jsonErr != nil {
+		errLogger.Fatalf("error in un-marshalling config JSON: %v", jsonErr)
 		return nil
 	}
 
-	creds, err := credentials.NewServerTLSFromFile(certFile, keyFile)
-	if err != nil {
-		errLogger.Println("failed to setup TLS")
+	creds, credErr := credentials.NewServerTLSFromFile(certFile, keyFile)
+	if credErr != nil {
+		errLogger.Fatalf("failed to setup TLS: %v", credErr)
 		return nil
 	}
 

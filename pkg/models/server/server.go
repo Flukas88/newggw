@@ -75,6 +75,12 @@ type App struct {
 	Server    *grpc.Server
 }
 
+// Conversions is the mapping from degrees to function to use
+var Conversions = map[string]helpers.ConvertFn{
+	"C": helpers.Kelvin2Celsius,
+	"F": helpers.Kelvin2Fahrenheit,
+}
+
 // SetupCloseHandler creates a 'listener' on a new goroutine which will notify the
 // program if it receives an interrupt from the OS. We then handle this by calling
 // our clean up procedure and exiting the program.
@@ -91,14 +97,8 @@ func (a *App) SetupCloseHandler() {
 
 // GetCityInfo gets "city" weather in "degrees"
 func (c *CityTemp) GetCityInfo(city, degrees string, data OpenWeather) error {
-	Conversions := map[string]helpers.ConvertFn{
-		"C": helpers.Kelvin2Celsius,
-		"F": helpers.Kelvin2Fahrenheit,
-	}
-
 	c.City = city
 	c.Temp = Conversions[degrees](data.Main.Temp)
 	c.Degrees = degrees
-
 	return nil
 }

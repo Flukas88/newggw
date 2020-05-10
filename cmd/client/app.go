@@ -14,14 +14,14 @@ func NewApp(certFile string) *cl.App {
 	outLogger := log.New(os.Stdout, "ClientApp - ", log.LstdFlags)
 	errLogger := log.New(os.Stderr, "ClientApp - ", log.LstdFlags)
 	// Reading config
-	configFile, err := ioutil.ReadFile("client.json")
-	if err != nil {
-		log.Fatal(err.Error())
+	configFile, loadErr := ioutil.ReadFile("client.json")
+	if loadErr != nil {
+		log.Fatalf("error in reading client config file: %v", loadErr)
 		return nil
 	}
-	err = json.Unmarshal(configFile, &config)
-	if err != nil {
-		log.Fatal("Error in un-marshalling config JSON")
+	jsonErr := json.Unmarshal(configFile, &config)
+	if jsonErr != nil {
+		log.Fatalf("error in un-marshalling config JSON: %v", jsonErr)
 		return nil
 	}
 
