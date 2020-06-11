@@ -31,7 +31,7 @@ func GetRespJSON(city string) (srv.OpenWeather, error) {
 		return srv.OpenWeather{}, errors.New("error in unmarshalling the json response")
 	}
 
-	if weather.Cod != 200 {
+	if weather.Cod != http.StatusOK {
 		retCode := weather.Cod
 		errMsg := fmt.Sprintf("API returned code %d. Look for explanation at http://openweathermap.org/faq#error%d", retCode, retCode)
 		return srv.OpenWeather{}, errors.New(errMsg)
