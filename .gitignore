@@ -5,5 +5,5 @@
 .idea/*
 .env
 certs/CA/*
-cmd/server/server
-cmd/client/client
+./cmd/server/server
+./cmd/client/client
