@@ -8,18 +8,33 @@ fi
 
 DOMAIN=$1
 
-cd ~/certs
 
 openssl genrsa -out $DOMAIN.key 2048
-openssl req -new  -config service.cnf -key $DOMAIN.key -out $DOMAIN.csr
+openssl req -new -subj "/C=AU/ST=NSW/L=Melbourn/O=CoupaInvoiceSmash/OU=Development/CN=${DOMAIN}/emailAddress=test@test.com" -key $DOMAIN.key -out $DOMAIN.csr
+
+
 
 cat > $DOMAIN.ext << EOF
-authorityKeyIdentifier=keyid,issuer
-basicConstraints=CA:FALSE
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+[ req ]
+prompt = no
+distinguished_name = server_distinguished_name
+req_extensions = v3_req
+
+[ server_distinguished_name ]
+commonName = $DOMAIN
+stateOrProvinceName = NSW
+countryName = AU
+emailAddress = test@test.com
+organizationName = Coupa InvoiceSmash
+organizationalUnitName = Development
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 subjectAltName = @alt_names
-[alt_names]
-DNS.1 = $DOMAIN
+
+[ alt_names ]
+DNS.0 = $DOMAIN
 EOF
 
-openssl x509 -req  -passin pass:secret -in $DOMAIN.csr -CA myCA.pem -CAkey myCA.key -CAcreateserial -out $DOMAIN.crt -days 825 -sha256 -extfile $DOMAIN.ext
+openssl x509 -req  -passin pass:secret -in $DOMAIN.csr -CA ca.pem -CAkey ca.key -CAcreateserial -out $DOMAIN.crt -days 825 -sha256 -extfile $DOMAIN.ext
