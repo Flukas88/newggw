@@ -5,5 +5,5 @@ go 1.14
 require (
 	github.com/golang/protobuf v1.5.3
 	github.com/json-iterator/go v1.1.12
-	google.golang.org/grpc v1.60.1
+	google.golang.org/grpc v1.62.1
 )
